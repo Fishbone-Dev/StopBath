@@ -1,7 +1,7 @@
 """Tests for the processing engine, LUTs, file handling and export.
 
 Run:  .venv/bin/python -m unittest discover -s tests -v
-Set FILMLAB_SAMPLE_RAW=/path/to/file.ARW to include a real RAW in the export test.
+Set STOPBATH_SAMPLE_RAW=/path/to/file.ARW to include a real RAW in the export test.
 """
 import os
 import sys
@@ -14,8 +14,8 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from filmlab import export, geometry, imageio, looks, pipeline  # noqa: E402
-from filmlab.lut import Lut, LutError  # noqa: E402
+from stopbath import export, geometry, imageio, looks, pipeline  # noqa: E402
+from stopbath.lut import Lut, LutError  # noqa: E402
 
 
 def gradient_image(h=64, w=96):
@@ -100,7 +100,7 @@ class PipelineTests(unittest.TestCase):
 
     def test_bundled_luts_load(self):
         sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-        from filmlab.gui.app import bundled_luts
+        from stopbath.gui.app import bundled_luts
         luts = bundled_luts()
         self.assertGreaterEqual(len(luts), 25)
         grey = np.linspace(0, 1, 50, dtype=np.float32)[None, :, None].repeat(3, axis=2)
@@ -178,7 +178,7 @@ class PipelineTests(unittest.TestCase):
     def test_region_render_with_denoise_matches_full_render(self):
         """Same as above with noise reduction, which needs the margin the app adds around regions."""
         sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-        from filmlab.gui.app import _render_region  # the function the zoom view and loupe use
+        from stopbath.gui.app import _render_region  # the function the zoom view and loupe use
         rng = np.random.default_rng(11)
         full = self._photo() + rng.normal(0, 0.02, (600, 900, 3)).astype(np.float32)
         s = pipeline.Settings().with_look_defaults('Kodak Portra 400')
@@ -195,7 +195,7 @@ class PipelineTests(unittest.TestCase):
     def test_cropped_straightened_region_matches_export(self):
         """Zoom/loupe with a crop and straighten angle must show exactly what the export contains."""
         sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-        from filmlab.gui.app import _render_region
+        from stopbath.gui.app import _render_region
         full = self._photo()
         for extra in ({'angle': 7.3, 'crop_w': 0.6, 'crop_h': 0.55, 'crop_cx': 0.45, 'crop_cy': 0.52},
                       {'rot90': 1, 'crop_w': 0.7, 'crop_h': 0.8},
@@ -356,9 +356,9 @@ class LensTests(unittest.TestCase):
             x[0x829D] = fnum
         return e
 
-    @unittest.skipUnless(__import__('filmlab.lens', fromlist=['x']).available(), 'lensfunpy not installed')
+    @unittest.skipUnless(__import__('stopbath.lens', fromlist=['x']).available(), 'lensfunpy not installed')
     def test_identification_is_strict(self):
-        from filmlab import lens
+        from stopbath import lens
         ok = lens.identify(self.exif('SONY', 'ILCE-7M2', 'E 25mm F2', 25.0, 8.0))
         self.assertIsNotNone(ok)
         self.assertEqual(ok.lens_model, 'E 25mm f/2')
@@ -371,10 +371,10 @@ class LensTests(unittest.TestCase):
         # Similar-but-different camera models must not match
         self.assertIsNone(lens.identify(self.exif('Apple', 'iPhone 12 Pro', 'iPhone 12 Pro back camera', 4.2, 1.6)))
 
-    @unittest.skipUnless(__import__('filmlab.lens', fromlist=['x']).available(), 'lensfunpy not installed')
+    @unittest.skipUnless(__import__('stopbath.lens', fromlist=['x']).available(), 'lensfunpy not installed')
     def test_correction_maps_and_consistency(self):
-        from filmlab import lens
-        from filmlab.gui.app import _render_region
+        from stopbath import lens
+        from stopbath.gui.app import _render_region
         info = lens.identify(self.exif('SONY', 'ILCE-7M2', 'E 25mm F2', 25.0, 4.0))
         rng = np.random.default_rng(21)
         full = (rng.random((600, 900, 3), dtype=np.float32) * 0.6 + 0.1)
@@ -399,7 +399,7 @@ class LensTests(unittest.TestCase):
 
 class AutoTests(unittest.TestCase):
     def test_auto_brightens_dark_photos_and_neutralises_casts(self):
-        from filmlab import auto
+        from stopbath import auto
         rng = np.random.default_rng(31)
         base = rng.random((300, 450, 3), dtype=np.float32) * 0.18 + 0.02          # dull, dark scene
         sug = auto.auto_light_color(base * 0.25, True)
@@ -412,7 +412,7 @@ class AutoTests(unittest.TestCase):
             self.assertTrue(-2 <= v <= 2, (k, v))
 
     def test_auto_straighten_levels_lines_and_refuses_noise(self):
-        from filmlab import auto, geometry
+        from stopbath import auto, geometry
         h, w = 600, 900
         img = np.full((h, w, 3), 0.25, np.float32)
         for y in range(80, h, 110):                                                # level stripes
@@ -522,10 +522,10 @@ class FileTests(unittest.TestCase):
         self.assertIsNotNone(err)
         self.assertFalse((self.tmp / 'o.jpg').exists())
 
-    @unittest.skipUnless(os.environ.get('FILMLAB_SAMPLE_RAW'), 'set FILMLAB_SAMPLE_RAW to test a real RAW')
+    @unittest.skipUnless(os.environ.get('STOPBATH_SAMPLE_RAW'), 'set STOPBATH_SAMPLE_RAW to test a real RAW')
     def test_export_real_raw(self):
         import shutil
-        src = Path(os.environ['FILMLAB_SAMPLE_RAW'])
+        src = Path(os.environ['STOPBATH_SAMPLE_RAW'])
         shutil.copy(src, self.tmp / src.name)
         photo = imageio.scan_folder(self.tmp)[0]
         s = pipeline.Settings().with_look_defaults('Kodak Tri-X 400')

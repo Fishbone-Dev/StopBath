@@ -1,17 +1,17 @@
-; Optional Windows installer for Film Lab (Inno Setup 6: https://jrsoftware.org/isinfo.php).
-; Build "Film Lab.exe" first (tools/build-windows.sh), then compile this file with ISCC.exe.
+; Optional Windows installer for Stop Bath (Inno Setup 6: https://jrsoftware.org/isinfo.php).
+; Build "Stop Bath.exe" first (tools/build-windows.sh), then compile this file with ISCC.exe.
 [Setup]
-AppName=Film Lab
-AppVersion=1.0.3
+AppName=Stop Bath
+AppVersion=1.1.0
 AppPublisher=Fishbone
 AppCopyright=© 2026 Fishbone
-DefaultDirName={autopf}\Film Lab
-DefaultGroupName=Film Lab
+DefaultDirName={autopf}\Stop Bath
+DefaultGroupName=Stop Bath
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=FilmLab-1.0.3-Windows-x64-Setup
-SetupIconFile=..\film-lab.ico
-UninstallDisplayIcon={app}\Film Lab.exe
+OutputBaseFilename=StopBath-1.1.0-Windows-x64-Setup
+SetupIconFile=..\stop-bath.ico
+UninstallDisplayIcon={app}\Stop Bath.exe
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
@@ -20,12 +20,12 @@ WizardStyle=modern
 Name: "desktopicon"; Description: "Create a desktop shortcut"; Flags: unchecked
 
 [Files]
-Source: "..\build-win\dist\Film Lab.exe"; DestDir: "{app}"
-Source: "..\filmlab\luts\CREDITS.txt"; DestDir: "{app}"; DestName: "Credits.txt"
+Source: "..\build-win\dist\Stop Bath.exe"; DestDir: "{app}"
+Source: "..\stopbath\luts\CREDITS.txt"; DestDir: "{app}"; DestName: "Credits.txt"
 
 [Icons]
-Name: "{group}\Film Lab"; Filename: "{app}\Film Lab.exe"
-Name: "{autodesktop}\Film Lab"; Filename: "{app}\Film Lab.exe"; Tasks: desktopicon
+Name: "{group}\Stop Bath"; Filename: "{app}\Stop Bath.exe"
+Name: "{autodesktop}\Stop Bath"; Filename: "{app}\Stop Bath.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\Film Lab.exe"; Description: "Start Film Lab"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\Stop Bath.exe"; Description: "Start Stop Bath"; Flags: nowait postinstall skipifsilent

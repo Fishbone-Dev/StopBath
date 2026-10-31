@@ -1,4 +1,4 @@
-"""Film Lab main window."""
+"""Stop Bath main window."""
 import dataclasses
 import hashlib
 import json
@@ -30,7 +30,7 @@ from .canvas import PreviewCanvas, Region
 from .widgets import (EDITED_ROLE, KIND_ROLE, MARKED_ROLE, THUMB_ROLE, DropOverlay, ElidedLabel, FilmstripDelegate,
                       Histogram, LookDelegate, NoScrollComboBox, ParamSlider, Section, Toast)
 
-APP_NAME = 'Film Lab'
+APP_NAME = 'Stop Bath'
 DATA_DIR = log_mod.DATA_DIR
 PREVIEW_SIDE = 1800
 BUNDLED_LUT_DIR = Path(__file__).resolve().parent.parent / 'luts'
@@ -40,7 +40,7 @@ LUT_CATEGORIES = ('Color Negative', 'Slide', 'Black & White')
 
 
 def bundled_luts():
-    """[(category, film name, path)] of the film LUTs shipped with Film Lab."""
+    """[(category, film name, path)] of the film LUTs shipped with Stop Bath."""
     out = []
     for cat in LUT_CATEGORIES:
         for p in sorted((BUNDLED_LUT_DIR / cat).glob('*')):
@@ -424,7 +424,11 @@ class MainWindow(QMainWindow):
         self.setWindowTitle(APP_NAME)
         self.setWindowIcon(app_icon())
         self.setAcceptDrops(True)
-        self.qsettings = QSettings('film-lab', 'film-lab')
+        self.qsettings = QSettings('stop-bath', 'stop-bath')
+        if not self.qsettings.allKeys():
+            old = QSettings('film-lab', 'film-lab')     # settings saved under the old name
+            for key in old.allKeys():
+                self.qsettings.setValue(key, old.value(key))
 
         self.folder = None
         self.photos = []
@@ -543,8 +547,8 @@ class MainWindow(QMainWindow):
 
         logo = QLabel()
         logo.setPixmap(app_icon().pixmap(22, 22))
-        name = QLabel('FILM LAB')
-        name.setToolTip('Film Lab by Fishbone')
+        name = QLabel('STOP BATH')
+        name.setToolTip('Stop Bath by Fishbone')
         name.setObjectName('appName')
         lay.addWidget(logo)
         lay.addWidget(name)
@@ -575,14 +579,14 @@ class MainWindow(QMainWindow):
 
         self.export_btn = self._button('Export', self.export_dialog, name='primary', tip='Export photos (Ctrl+E)')
         lay.addWidget(self.export_btn)
-        help_btn = self._button('?', None, name='round', tip='Help: keyboard shortcuts, about Film Lab')
+        help_btn = self._button('?', None, name='round', tip='Help: keyboard shortcuts, about Stop Bath')
         help_menu = QMenu(self)
         help_menu.addAction('Keyboard Shortcuts\tF1', self.show_shortcuts)
         help_menu.addSeparator()
         help_menu.addAction('Copy Diagnostic Info', self.copy_diagnostics)
         help_menu.addAction('Open Log Folder', self.open_log_folder)
         help_menu.addSeparator()
-        help_menu.addAction('About Film Lab', self.show_about)
+        help_menu.addAction('About Stop Bath', self.show_about)
         help_btn.setMenu(help_menu)
         lay.addWidget(help_btn)
         for b in (self.compare_btn, self.recipes_btn, self.export_btn):
@@ -609,7 +613,7 @@ class MainWindow(QMainWindow):
         icon = QLabel()
         icon.setPixmap(app_icon().pixmap(96, 96))
         icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        byline = QLabel('Film Lab  ·  by Fishbone')
+        byline = QLabel('Stop Bath  ·  by Fishbone')
         byline.setObjectName('dim')
         byline.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title = QLabel('Your darkroom is ready')
@@ -1014,7 +1018,7 @@ class MainWindow(QMainWindow):
         lay.addWidget(sec)
 
         lay.addSpacing(10)
-        credit = QLabel('Film Lab  ·  by Fishbone')
+        credit = QLabel('Stop Bath  ·  by Fishbone')
         credit.setObjectName('faint')
         credit.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lay.addWidget(credit)
@@ -2202,7 +2206,7 @@ class MainWindow(QMainWindow):
             # With at most one highlighted photo, export the one on screen
             selected = [self.current_photo()]
         folder_id = hashlib.sha1(str(Path(self.folder).resolve()).encode()).hexdigest()[:12]
-        default_out = self.qsettings.value('export_dir/' + folder_id, '') or str(Path(self.folder) / 'film-lab')
+        default_out = self.qsettings.value('export_dir/' + folder_id, '') or str(Path(self.folder) / 'stop-bath')
         marked = [ph for ph in self.photos if ph.key in self.marked]
         first = selected[0] if selected else self.current_photo()
 
@@ -2457,7 +2461,7 @@ class MainWindow(QMainWindow):
 
     def show_about(self):
         dlg = QDialog(self)
-        dlg.setWindowTitle('About Film Lab')
+        dlg.setWindowTitle('About Stop Bath')
         dlg.setMinimumWidth(560)
         lay = QVBoxLayout(dlg)
         lay.setContentsMargins(30, 26, 30, 22)
@@ -2466,7 +2470,7 @@ class MainWindow(QMainWindow):
         icon.setPixmap(app_icon().pixmap(72, 72))
         icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lay.addWidget(icon)
-        t = QLabel('Film Lab %s' % __version__)
+        t = QLabel('Stop Bath %s' % __version__)
         t.setObjectName('emptyTitle')
         t.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lay.addWidget(t)
@@ -2549,7 +2553,7 @@ class MainWindow(QMainWindow):
         self._save_session()
         self.qsettings.setValue('geometry', self.saveGeometry())
         self._stop_background_work()
-        log.info('Film Lab closed')
+        log.info('Stop Bath closed')
         super().closeEvent(e)
 
     def _stop_background_work(self):
@@ -2648,10 +2652,10 @@ def main():
         log.info('Self-test: %s -> %s', sys.argv[2], sys.argv[3])
         return _selftest(sys.argv[2], sys.argv[3])
     QApplication.setApplicationName(APP_NAME)
-    QApplication.setDesktopFileName('film-lab')
+    QApplication.setDesktopFileName('stop-bath')
     app = QApplication(sys.argv)
     log_mod.setup()
-    log.info('==== Film Lab starting ====\n%s', log_mod.system_info())
+    log.info('==== Stop Bath starting ====\n%s', log_mod.system_info())
     app.setStyle('Fusion')
     app.setPalette(style.palette())
     font = app.font()

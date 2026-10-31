@@ -1,5 +1,5 @@
 """Copies a curated set of film emulations from the RawTherapee Film Simulation Collection
-(CC BY-SA 4.0, by Pat David, Pavlov Dmitry and Michael Ezra) into filmlab/luts/.
+(CC BY-SA 4.0, by Pat David, Pavlov Dmitry and Michael Ezra) into stopbath/luts/.
 
     curl -LO https://rawtherapee.com/shared/HaldCLUT.zip      # 421 MB, md5 4742e362a70c1a1c0fb9042a17d285e1
     .venv/bin/python tools/import_haldclut.py HaldCLUT.zip
@@ -11,9 +11,9 @@ import sys
 import zipfile
 from pathlib import Path
 
-OUT = Path(__file__).resolve().parent.parent / 'filmlab' / 'luts'
+OUT = Path(__file__).resolve().parent.parent / 'stopbath' / 'luts'
 
-# category -> [(name shown in Film Lab, file in the collection)]
+# category -> [(name shown in Stop Bath, file in the collection)]
 CURATED = {
     'Color Negative': [
         ('Kodak Portra 160', 'Color/Kodak/Kodak Portra 160 2.png'),
@@ -60,7 +60,7 @@ Authors: Pat David, Pavlov Dmitry, Michael Ezra
 
 The files are unmodified Hald CLUT images, renamed for readability. Film names are used only to
 say which film stock each profile is designed to approximate; neither the authors of the collection
-nor Film Lab are affiliated with or endorsed by Kodak, Fujifilm, Ilford or other trademark owners.
+nor Stop Bath are affiliated with or endorsed by Kodak, Fujifilm, Ilford or other trademark owners.
 """
 
 

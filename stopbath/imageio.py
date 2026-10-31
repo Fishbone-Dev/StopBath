@@ -64,7 +64,7 @@ class Photo:
 # Folders cameras and operating systems keep on memory cards that hold no photos to edit
 # (e.g. Sony's M4ROOT/THMBNL video thumbnails, AVCHD structures, Windows/macOS system folders).
 _SKIP_DIRS = {'M4ROOT', 'PRIVATE', 'AVF_INFO', 'MP_ROOT', 'THMBNL', 'AVCHD', 'CLIP', 'SUB', 'MISC',
-              'SYSTEM VOLUME INFORMATION', '$RECYCLE.BIN', 'FILM-LAB'}
+              'SYSTEM VOLUME INFORMATION', '$RECYCLE.BIN', 'STOP-BATH', 'FILM-LAB'}
 
 
 def scan_folder(folder):
@@ -370,7 +370,7 @@ def read_exif(photo, source):
         if 0x010F not in exif:
             exif = _thumbnail_exif(photo.raw)
     exif[0x0112] = 1
-    exif[0x0131] = 'Film Lab by Fishbone'
+    exif[0x0131] = 'Stop Bath by Fishbone'
     return exif
 
 

@@ -4,5 +4,5 @@ import sys
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()
-    from filmlab.gui.app import main
+    from stopbath.gui.app import main
     sys.exit(main())

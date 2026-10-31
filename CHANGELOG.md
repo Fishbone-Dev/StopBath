@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0 (2026-10-31)
+
+- Renamed from Film Lab to Stop Bath. Saved edits, recipes and settings from Film Lab are carried over
+  on first start. Exports now go to a `stop-bath` folder by default.
+
 ## 1.0.3 (2026-10-30)
 
 - Export dialog shows the actual output file name, and exports the photo on screen when no other photo

@@ -1,7 +1,7 @@
 """Logging to a file, so problems can be reported from the windowed Windows app (no console).
 
-Log folder:  Windows  %APPDATA%\\Film Lab\\logs      Linux  ~/.local/share/film-lab/logs
-  filmlab.log   what the app did, timings, and full error details (rotated, max ~3 x 2 MB)
+Log folder:  Windows  %APPDATA%\\Stop Bath\\logs      Linux  ~/.local/share/stop-bath/logs
+  stopbath.log   what the app did, timings, and full error details (rotated, max ~3 x 2 MB)
   crash.log     low-level crash reports from native components (only if something hard-crashes)
 """
 import faulthandler
@@ -9,18 +9,31 @@ import logging
 import logging.handlers
 import os
 import platform
+import shutil
 import sys
 import threading
 from pathlib import Path
 
 if os.name == 'nt':
-    DATA_DIR = Path(os.environ.get('APPDATA', Path.home() / 'AppData' / 'Roaming')) / 'Film Lab'
+    DATA_DIR = Path(os.environ.get('APPDATA', Path.home() / 'AppData' / 'Roaming')) / 'Stop Bath'
+    OLD_DATA_DIR = DATA_DIR.with_name('Film Lab')
 else:
-    DATA_DIR = Path(os.environ.get('XDG_DATA_HOME', Path.home() / '.local/share')) / 'film-lab'
+    DATA_DIR = Path(os.environ.get('XDG_DATA_HOME', Path.home() / '.local/share')) / 'stop-bath'
+    OLD_DATA_DIR = DATA_DIR.with_name('film-lab')
 LOG_DIR = DATA_DIR / 'logs'
-LOG_FILE = LOG_DIR / 'filmlab.log'
-log = logging.getLogger('filmlab')
+LOG_FILE = LOG_DIR / 'stopbath.log'
+log = logging.getLogger('stopbath')
 _crash_file = None
+
+
+def migrate_old_data():
+    """Copy edits and recipes saved under the app's old name (Film Lab) on first start."""
+    if DATA_DIR.exists() or not OLD_DATA_DIR.is_dir():
+        return
+    try:
+        shutil.copytree(OLD_DATA_DIR, DATA_DIR, ignore=shutil.ignore_patterns('logs'))
+    except OSError:
+        pass
 
 
 def setup():
@@ -28,6 +41,7 @@ def setup():
     global _crash_file
     if log.handlers:
         return log
+    migrate_old_data()
     try:
         LOG_DIR.mkdir(parents=True, exist_ok=True)
         handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=2_000_000, backupCount=2,
@@ -56,7 +70,7 @@ def setup():
 def system_info():
     """One block of text describing the setup, for bug reports."""
     from . import __version__
-    lines = ['Film Lab %s' % __version__,
+    lines = ['Stop Bath %s' % __version__,
              'OS: %s %s (%s)' % (platform.system(), platform.release(), platform.version()),
              'Machine: %s, %s CPUs' % (platform.machine(), os.cpu_count()),
              'Python: %s%s' % (platform.python_version(), ' (packaged .exe)' if getattr(sys, 'frozen', False) else '')]

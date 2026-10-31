@@ -1,4 +1,4 @@
-Film Lab
+Stop Bath
 Copyright (C) 2026 Fishbone
 
 This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -13,8 +13,8 @@ You should have received a copy of the GNU General Public License along with thi
 LICENSE). If not, see <https://www.gnu.org/licenses/>.
 
 Bundled third-party material keeps its own licence:
-  - filmlab/luts/: RawTherapee Film Simulation Collection by Pat David, Pavlov Dmitry and Michael Ezra,
-    CC BY-SA 4.0 (see filmlab/luts/CREDITS.txt)
+  - stopbath/luts/: RawTherapee Film Simulation Collection by Pat David, Pavlov Dmitry and Michael Ezra,
+    CC BY-SA 4.0 (see stopbath/luts/CREDITS.txt)
   - Lens profiles come from the lensfun database (CC BY-SA 3.0) via lensfunpy (MIT); lensfun is LGPL.
   - The Windows .exe also contains Python (PSF licence), PyQt6/Qt (GPL v3 / LGPL), NumPy (BSD),
     Pillow (MIT-CMU), pillow-heif/libheif (BSD/LGPL), rawpy (MIT) and LibRaw (LGPL/CDDL).

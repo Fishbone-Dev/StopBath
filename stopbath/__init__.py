@@ -1,4 +1,4 @@
-"""Film Lab: film looks for RAW and image files.
+"""Stop Bath: film looks for RAW and image files.
 
 Copyright (C) 2026 Fishbone. Licensed under the GNU General Public License v3 or later
 (see LICENSE and NOTICE).
@@ -11,6 +11,6 @@ import os as _os
 for _var in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS'):
     _os.environ.setdefault(_var, '1')
 
-__version__ = '1.0.3'
+__version__ = '1.1.0'
 __author__ = 'Fishbone'
 __license__ = 'GPL-3.0-or-later'

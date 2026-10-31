@@ -1,22 +1,25 @@
-<img src="docs/icon.png" width="96" alt="Film Lab icon">
+<img src="docs/icon.png" width="96" alt="Stop Bath icon">
 
-# Film Lab
+# Stop Bath
 
 Film looks for RAW and JPEG photos, for Windows and Linux.
 
 Copyright (C) 2026 Fishbone. Free software under the GNU GPL v3 or later (see `LICENSE` and `NOTICE`).
 
-Downloads: https://github.com/Fishbone-Dev/FilmLab/releases
+Downloads: https://github.com/Fishbone-Dev/StopBath/releases
 
-![Film Lab with the Fujifilm Velvia 50 look](docs/screenshot.png)
+Stop Bath was called Film Lab up to version 1.0.3. Edits and settings from Film Lab are picked up
+automatically.
 
-![Film Lab with the Kodak Tri-X 400 look](docs/screenshot-bw.png)
+![Stop Bath with the Fujifilm Velvia 50 look](docs/screenshot.png)
+
+![Stop Bath with the Kodak Tri-X 400 look](docs/screenshot-bw.png)
 
 ## Install
 
 ### Windows 10/11
 
-Download `FilmLab-1.0.3-Windows-x64.zip`, unzip it anywhere and run `Film Lab.exe`. Nothing is
+Download `StopBath-1.1.0-Windows-x64.zip`, unzip it anywhere and run `Stop Bath.exe`. Nothing is
 installed. The program isn't code-signed, so Windows may show "Windows protected your PC" the first
 time: choose *More info* and *Run anyway*, or right-click the zip, open *Properties* and tick *Unblock*
 before extracting.
@@ -26,13 +29,13 @@ before extracting.
 Requires Python 3.10 or newer. On Debian/Ubuntu also install `python3-venv` and `libxcb-cursor0`.
 
 ```
-tar xf FilmLab-1.0.3-Linux.tar.gz
-cd "Film Lab"
-./film-lab              # first run sets up its Python environment in .venv
-./film-lab --install    # optional: add Film Lab to the application menu
+tar xf StopBath-1.1.0-Linux.tar.gz
+cd "Stop Bath"
+./stop-bath              # first run sets up its Python environment in .venv
+./stop-bath --install    # optional: add Stop Bath to the application menu
 ```
 
-To uninstall, delete the folder (and `~/.local/share/applications/film-lab.desktop` if you used
+To uninstall, delete the folder (and `~/.local/share/applications/stop-bath.desktop` if you used
 `--install`).
 
 ## Features
@@ -82,7 +85,7 @@ To uninstall, delete the folder (and `~/.local/share/applications/film-lab.deskt
 
 ## Export
 
-JPEG, PNG, TIFF or WebP, at full resolution or a reduced long edge. Exports go to a `film-lab` folder
+JPEG, PNG, TIFF or WebP, at full resolution or a reduced long edge. Exports go to a `stop-bath` folder
 inside the photo folder unless another folder is chosen. Camera metadata is copied and an sRGB profile
 is embedded. Photos are rendered in bands on background threads, so memory use stays moderate and an
 export can be cancelled at any time.
@@ -99,13 +102,13 @@ start from a similar rendering.
 ## Reporting problems
 
 Use *Help (?) > Copy Diagnostic Info* and paste the result into a message. Log files are in
-`%APPDATA%\Film Lab\logs` on Windows and `~/.local/share/film-lab/logs` on Linux.
+`%APPDATA%\Stop Bath\logs` on Windows and `~/.local/share/stop-bath/logs` on Linux.
 
 ## Building
 
-- Run from source: `./film-lab` (Linux), or `python -m filmlab` with the packages in `requirements.txt`.
-- Tests: `./film-lab --test`. Set `FILMLAB_SAMPLE_RAW=/path/to/file.ARW` to include a real RAW file.
-- Windows executable: `tools/build-windows.sh` builds `Film Lab.exe` on Linux using Wine and PyInstaller.
+- Run from source: `./stop-bath` (Linux), or `python -m stopbath` with the packages in `requirements.txt`.
+- Tests: `./stop-bath --test`. Set `STOPBATH_SAMPLE_RAW=/path/to/file.ARW` to include a real RAW file.
+- Windows executable: `tools/build-windows.sh` builds `Stop Bath.exe` on Linux using Wine and PyInstaller.
   `tools/windows-installer.iss` is an optional Inno Setup script.
 - Bundled film profiles: `tools/import_haldclut.py` imports them from the RawTherapee collection.
 
@@ -113,26 +116,26 @@ Use *Help (?) > Copy Diagnostic Info* and paste the result into a message. Log f
 
 | Path | Contents |
 |---|---|
-| `filmlab/pipeline.py` | Image processing |
-| `filmlab/looks.py` | Film look definitions |
-| `filmlab/geometry.py` | Crop, straighten, rotation |
-| `filmlab/lens.py` | Lens corrections |
-| `filmlab/auto.py` | Auto adjustments and auto-straighten |
-| `filmlab/lut.py` | LUT loading and application |
-| `filmlab/imageio.py` | Decoding, thumbnails, metadata, saving |
-| `filmlab/export.py` | Export |
-| `filmlab/gui/` | User interface |
-| `filmlab/luts/` | Bundled film profiles and their credits |
+| `stopbath/pipeline.py` | Image processing |
+| `stopbath/looks.py` | Film look definitions |
+| `stopbath/geometry.py` | Crop, straighten, rotation |
+| `stopbath/lens.py` | Lens corrections |
+| `stopbath/auto.py` | Auto adjustments and auto-straighten |
+| `stopbath/lut.py` | LUT loading and application |
+| `stopbath/imageio.py` | Decoding, thumbnails, metadata, saving |
+| `stopbath/export.py` | Export |
+| `stopbath/gui/` | User interface |
+| `stopbath/luts/` | Bundled film profiles and their credits |
 | `tests/` | Tests |
 | `tools/` | Build and import scripts |
 
 ## Credits and licence
 
-Film Lab is copyright (C) 2026 Fishbone and licensed under the GNU General Public License v3 or later.
+Stop Bath is copyright (C) 2026 Fishbone and licensed under the GNU General Public License v3 or later.
 See `LICENSE` (full licence text) and `NOTICE` (copyright and bundled components).
 
 - Film profiles: RawTherapee Film Simulation Collection by Pat David, Pavlov Dmitry and Michael Ezra
-  (CC BY-SA 4.0), see `filmlab/luts/CREDITS.txt`. Film names only identify the stock each profile
+  (CC BY-SA 4.0), see `stopbath/luts/CREDITS.txt`. Film names only identify the stock each profile
   approximates; there is no affiliation with Kodak, Fujifilm or Ilford.
 - Lens data: lensfun (CC BY-SA 3.0) via lensfunpy.
 - Photos in the screenshots: sample files from raw.pixls.us (CC0 public domain).

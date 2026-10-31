@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds the Windows app on Linux with Wine + PyInstaller (how dist/windows/Film Lab.exe was made).
+# Builds the Windows app on Linux with Wine + PyInstaller (how dist/windows/Stop Bath.exe was made).
 #   tools/build-windows.sh
 # Needs: wine, curl, unzip. Downloads Windows Python 3.12 (NuGet package) into build-win/.
 set -euo pipefail
@@ -15,8 +15,8 @@ if [[ ! -f "$B/py/tools/python.exe" ]]; then
 fi
 cd "$HERE"
 wine "$B/py/tools/python.exe" -m PyInstaller --noconfirm --clean --onefile --windowed \
-  --name "Film Lab" --icon film-lab.ico --version-file tools/version_info.txt --paths . \
-  --add-data "filmlab/luts;filmlab/luts" --add-data "filmlab/gui/assets;filmlab/gui/assets" \
+  --name "Stop Bath" --icon stop-bath.ico --version-file tools/version_info.txt --paths . \
+  --add-data "stopbath/luts;stopbath/luts" --add-data "stopbath/gui/assets;stopbath/gui/assets" \
   --collect-binaries rawpy --collect-all pillow_heif --collect-all lensfunpy --exclude-module tkinter --exclude-module unittest \
-  --distpath "$B/dist" --workpath "$B/work" --specpath "$B" tools/filmlab_entry.py
-echo "Built: $B/dist/Film Lab.exe"
+  --distpath "$B/dist" --workpath "$B/work" --specpath "$B" tools/stopbath_entry.py
+echo "Built: $B/dist/Stop Bath.exe"

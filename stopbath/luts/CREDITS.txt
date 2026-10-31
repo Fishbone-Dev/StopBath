@@ -7,4 +7,4 @@ Authors: Pat David, Pavlov Dmitry, Michael Ezra
 
 The files are unmodified Hald CLUT images, renamed for readability. Film names are used only to
 say which film stock each profile is designed to approximate; neither the authors of the collection
-nor Film Lab are affiliated with or endorsed by Kodak, Fujifilm, Ilford or other trademark owners.
+nor Stop Bath are affiliated with or endorsed by Kodak, Fujifilm, Ilford or other trademark owners.
