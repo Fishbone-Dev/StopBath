@@ -1,3 +1,5 @@
+<img src="docs/icon.png" width="96" alt="Film Lab icon">
+
 # Film Lab
 
 Film looks for RAW and JPEG photos, for Windows and Linux.
@@ -5,6 +7,10 @@ Film looks for RAW and JPEG photos, for Windows and Linux.
 Copyright (C) 2026 Fishbone. Free software under the GNU GPL v3 or later (see `LICENSE` and `NOTICE`).
 
 Downloads: https://github.com/Fishbone-Dev/FilmLab/releases
+
+![Film Lab with the Fujifilm Velvia 50 look](docs/screenshot.png)
+
+![Film Lab with the Kodak Tri-X 400 look](docs/screenshot-bw.png)
 
 ## Install
 
@@ -129,4 +135,5 @@ See `LICENSE` (full licence text) and `NOTICE` (copyright and bundled components
   (CC BY-SA 4.0), see `filmlab/luts/CREDITS.txt`. Film names only identify the stock each profile
   approximates; there is no affiliation with Kodak, Fujifilm or Ilford.
 - Lens data: lensfun (CC BY-SA 3.0) via lensfunpy.
+- Photos in the screenshots: sample files from raw.pixls.us (CC0 public domain).
 - RAW decoding: LibRaw via rawpy. Images: Pillow and pillow-heif. Interface: Qt via PyQt6. NumPy.
