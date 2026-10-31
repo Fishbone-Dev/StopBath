@@ -1,0 +1,20 @@
+Film Lab
+Copyright (C) 2026 Fishbone
+
+This program is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program (the file
+COPYING). If not, see <https://www.gnu.org/licenses/>.
+
+Bundled third-party material keeps its own licence:
+  - filmlab/luts/: RawTherapee Film Simulation Collection by Pat David, Pavlov Dmitry and Michael Ezra,
+    CC BY-SA 4.0 (see filmlab/luts/CREDITS.txt)
+  - Lens profiles come from the lensfun database (CC BY-SA 3.0) via lensfunpy (MIT); lensfun is LGPL.
+  - The Windows .exe also contains Python (PSF licence), PyQt6/Qt (GPL v3 / LGPL), NumPy (BSD),
+    Pillow (MIT-CMU), pillow-heif/libheif (BSD/LGPL), rawpy (MIT) and LibRaw (LGPL/CDDL).

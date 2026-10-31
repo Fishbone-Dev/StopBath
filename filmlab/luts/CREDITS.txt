@@ -1,0 +1,10 @@
+Film emulation LUTs in this folder come from the RawTherapee Film Simulation Collection
+(version 2015-09-20), https://rawtherapee.com/shared/HaldCLUT.zip
+
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+         https://creativecommons.org/licenses/by-sa/4.0/
+Authors: Pat David, Pavlov Dmitry, Michael Ezra
+
+The files are unmodified Hald CLUT images, renamed for readability. Film names are used only to
+say which film stock each profile is designed to approximate; neither the authors of the collection
+nor Film Lab are affiliated with or endorsed by Kodak, Fujifilm, Ilford or other trademark owners.

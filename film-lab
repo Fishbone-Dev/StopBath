@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# Film Lab launcher.
+#   ./film-lab                     start the app
+#   ./film-lab ~/Pictures/shoot    start and open a folder
+#   ./film-lab --install           add Film Lab to the application menu
+#   ./film-lab --test              run the test suite
+set -euo pipefail
+
+HERE="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+VENV="$HERE/.venv"
+PY="$VENV/bin/python"
+
+setup() {
+  if [[ ! -x "$PY" ]]; then
+    echo "Setting up Film Lab (first run)…"
+    if ! python3 -m venv --system-site-packages "$VENV"; then
+      rm -rf "$VENV"
+      echo "Could not create a Python environment. On Debian/Ubuntu: sudo apt install python3-venv" >&2
+      exit 1
+    fi
+  fi
+  # Use the system's numpy / Pillow / PyQt6 when present; install only what's missing.
+  local missing=()
+  "$PY" -c 'import numpy' 2>/dev/null || missing+=(numpy)
+  "$PY" -c 'import PIL' 2>/dev/null || missing+=(pillow)
+  "$PY" -c 'import PyQt6.QtWidgets' 2>/dev/null || missing+=(PyQt6)
+  "$PY" -c 'import rawpy' 2>/dev/null || missing+=(rawpy)
+  "$PY" -c 'import pillow_heif' 2>/dev/null || missing+=(pillow-heif)
+  "$PY" -c 'import lensfunpy' 2>/dev/null || missing+=(lensfunpy)
+  if (( ${#missing[@]} )); then
+    echo "Installing: ${missing[*]}"
+    "$VENV/bin/pip" install -q "${missing[@]}"
+  fi
+}
+
+install_desktop() {
+  local apps="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+  local icons="${XDG_DATA_HOME:-$HOME/.local/share}/icons/hicolor/256x256/apps"
+  mkdir -p "$apps" "$icons"
+  QT_QPA_PLATFORM=offscreen PYTHONPATH="$HERE" "$PY" -c "
+import sys
+from PyQt6.QtWidgets import QApplication
+app = QApplication(sys.argv[:1])
+from filmlab.gui.app import app_icon
+app_icon().pixmap(256, 256).save(sys.argv[1])
+" "$icons/film-lab.png"
+  cat > "$apps/film-lab.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=Film Lab
+GenericName=Photo Film Looks
+Comment=Film looks for RAW and image files, by Fishbone
+Exec="$HERE/film-lab" %f
+Icon=film-lab
+Terminal=false
+Categories=Graphics;Photography;
+MimeType=inode/directory;
+StartupWMClass=film-lab
+EOF
+  update-desktop-database "$apps" 2>/dev/null || true
+  echo "Installed: Film Lab is now in your application menu."
+}
+
+setup
+case "${1:-}" in
+  --install) install_desktop ;;
+  --test)    cd "$HERE" && FILMLAB_SAMPLE_RAW="${FILMLAB_SAMPLE_RAW:-}" "$PY" -m unittest discover -s tests -v ;;
+  *)         cd "$HERE" && exec "$PY" -m filmlab "$@" ;;
+esac
