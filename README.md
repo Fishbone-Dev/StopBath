@@ -2,7 +2,7 @@
 
 Film looks for RAW and JPEG photos, for Windows and Linux.
 
-Copyright (C) 2026 Fishbone. Free software under the GNU GPL v3 or later (see `LICENSE`).
+Copyright (C) 2026 Fishbone. Free software under the GNU GPL v3 or later (see `LICENSE` and `NOTICE`).
 
 Downloads: https://github.com/Fishbone-Dev/FilmLab/releases
 
@@ -123,7 +123,7 @@ Use *Help (?) > Copy Diagnostic Info* and paste the result into a message. Log f
 ## Credits and licence
 
 Film Lab is copyright (C) 2026 Fishbone and licensed under the GNU General Public License v3 or later.
-See `LICENSE` and `COPYING`.
+See `LICENSE` (full licence text) and `NOTICE` (copyright and bundled components).
 
 - Film profiles: RawTherapee Film Simulation Collection by Pat David, Pavlov Dmitry and Michael Ezra
   (CC BY-SA 4.0), see `filmlab/luts/CREDITS.txt`. Film names only identify the stock each profile

@@ -1,7 +1,7 @@
 """Film Lab: film looks for RAW and image files.
 
 Copyright (C) 2026 Fishbone. Licensed under the GNU General Public License v3 or later
-(see LICENSE and COPYING).
+(see LICENSE and NOTICE).
 """
 import os as _os
 
